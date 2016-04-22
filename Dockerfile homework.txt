@@ -1,0 +1,43 @@
+
+# Dockerfile homework
+
+# Software:         Fastx_toolkit
+# Software Version: 0.0.14
+# Description:      This dockerfile can use to mount a image in docker, that count with installation of of FastXtools
+# Provides:         fastx_toolkit 0.0.14
+# Base Image:       biodckr/biodocker
+
+
+# Set the base image to Ubuntu
+FROM biodckr/biodocker
+
+#Installation 
+
+# Change user to root
+USER root
+
+RUN wget https://github.com/agordon/libgtextutils/releases/download/0.7/libgtextutils-0.7.tar.gz && \
+    tar -xvf libgtextutils-0.7.tar.gz && \
+    cd libgtextutils-0.7 && \ 
+    ./configure && \
+    make && \
+    sudo make install && \
+    cd .. && \
+    wget https://github.com/agordon/fastx_toolkit/releases/download/0.0.14/fastx_toolkit-0.0.14.tar.bz2 && \
+    tar -xvf fastx_toolkit-0.0.14.tar.bz2 && \ 
+    cd fastx_toolkit-0.0.14 && \
+    ./configure && \
+    make && \
+    sudo make install && \
+    cd .. && \
+    rm -rf fas* lib*
+
+# Change user to back to biodocker
+USER biodocker
+
+# CHANGE WORKDIR TO /DATA
+WORKDIR /data/
+
+
+# File Author / Maintainer
+MAINTAINER: Alberto Ponciano Gomez ponciano2806@hotmail.com 
